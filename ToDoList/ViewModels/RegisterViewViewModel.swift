@@ -9,47 +9,40 @@ import Foundation
 import FirebaseAuth
 import FirebaseFirestore
 
-class RegisterViewViewModel: ObservableObject{
+class RegisterViewViewModel: ObservableObject {
     @Published var name = ""
     @Published var email = ""
     @Published var password = ""
+    @Published var errorMessage = ""
     
-    func register(){
-        guard validate() else{
+    func register() {
+        guard validate() else {
             return
         }
         
-        Auth.auth().createUser(withEmail:email, password: password){ [weak self] result, error in
-            guard let userId = result?.user.uid else{
+        AuthService.shared.registerUser(withEmail: email, password: password, name: name) { [weak self] userId in
+            if userId == nil {
+                // Handle registration failure, perhaps set an error message
+                self?.errorMessage = "Registration failed"
+                print("Registration failed")
                 return
             }
-            self?.insertUserRecord(id: userId)
+            // Handle successful registration if needed (e.g., UI updates)
         }
     }
     
-    
-    private func insertUserRecord(id:String){
-        let newUser = User(id:id, name:name, email:email, joined: Date().timeIntervalSince1970)
-        let db = Firestore.firestore()
-        
-        db.collection("users")
-            .document(id)
-            .setData(newUser.asDictionary())
-    }
-    
-    private func validate() -> Bool{
+    private func validate() -> Bool {
         guard !name.trimmingCharacters(in: .whitespaces).isEmpty,
               !email.trimmingCharacters(in: .whitespaces).isEmpty,
-              !password.trimmingCharacters(in: .whitespaces).isEmpty
-        else{
+              !password.trimmingCharacters(in: .whitespaces).isEmpty else {
             return false
         }
         
-        guard email.contains("@") && email.contains(".") else{
+        guard email.contains("@") && email.contains(".") else {
             return false
         }
         
-        guard password.count >= 6 else{
+        guard password.count >= 6 else {
             return false
         }
         

@@ -5,23 +5,21 @@
 //  Created by 何斯鹏 on 2024-09-13.
 //
 
+import Foundation
 import FirebaseAuth
-import Foundation
 
-import Foundation
-class MainViewViewModel: ObservableObject{
-    @Published var currentUserId:String = ""
+class MainViewViewModel: ObservableObject {
+    @Published var currentUserId: String = ""
     private var handler: AuthStateDidChangeListenerHandle?
-    
-    init(){
-        self.handler = Auth.auth().addStateDidChangeListener{[weak self]_, user in
-            DispatchQueue.main.async{
-                self?.currentUserId = user?.uid ?? ""
-            }
+
+    init() {
+        self.handler = AuthService.shared.addAuthStateChangeListener { [weak self] userId in
+            self?.currentUserId = userId ?? ""
         }
     }
-    
-    public var isSignedIn:Bool{
-        return Auth.auth().currentUser != nil
+
+    public var isSignedIn: Bool {
+        return AuthService.shared.isSignedIn()
     }
 }
+

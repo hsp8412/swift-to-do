@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -64,6 +64,10 @@
 		40E351C72C9411F5003F056B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		40E66DCE2CBFA32D00ED8DCF /* Services */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Services; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		40E351AC2C940D19003F056B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -97,6 +101,7 @@
 		40E351B12C940D19003F056B /* ToDoList */ = {
 			isa = PBXGroup;
 			children = (
+				40E66DCE2CBFA32D00ED8DCF /* Services */,
 				40E351CC2C9413F5003F056B /* Other */,
 				40E351CB2C9413E8003F056B /* Models */,
 				40E351CA2C9413DD003F056B /* ViewModels */,
@@ -179,6 +184,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				40E66DCE2CBFA32D00ED8DCF /* Services */,
 			);
 			name = ToDoList;
 			packageProductDependencies = (
